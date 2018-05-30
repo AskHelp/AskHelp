@@ -1,4 +1,4 @@
-var dappAddress = "n1vkbHuKoSbmG1eu4FZmLnD9P659tik8eyx";
+var dappAddress = "n1zqVCWEam1hKuXiPQCNjBe4Q5n2i7SMwUw";
 
 $(function() {
     var url = window.location.search;
