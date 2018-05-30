@@ -26,7 +26,9 @@ function getHelpList() {
     nebpay.simulateCall(to, value, callFunction, callArgs, {
         listener: function(resp) {
             console.log(JSON.stringify(resp.result));
-
+if(!resp.result){
+				return;
+			}
             var myArr = JSON.parse(JSON.parse(resp.result));
 			
 			var str = "";
@@ -67,7 +69,9 @@ function getHelpListForNotFinish() {
     nebpay.simulateCall(to, value, callFunction, callArgs, {
         listener: function(resp) {
             console.log(JSON.stringify(resp.result));
-
+			if(!resp.result){
+				return;
+			}
             var myArr = JSON.parse(JSON.parse(resp.result));
 			
 			var str = "";
