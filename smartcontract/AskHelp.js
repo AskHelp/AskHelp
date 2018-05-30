@@ -88,18 +88,34 @@ AskHelp.prototype = {
 		//更新帮助过我的记录列表
 		this.helpMapIterator.set(requestor, JSON.stringify(helpIteratorArr));
 		
+		//将金额转给求助者
+		var result = Blockchain.transfer(obj.requestor, amountHelp * 1000000000000000000);
+		if (!result) {
+		  throw new Error(JSON.stringify(result));
+		}
+		Event.Trigger("GiveHelp", {
+		  Transfer: {
+			from: Blockchain.transaction.to,
+			to: obj.requestor,
+			value: amountHelp * 1000000000000000000
+		  }
+		});
+		
+		
+		
 		this.size += 1;
     },
 	
 	//取出所有帮助过我的记录
 	getHelpList: function() {
         var requestor = Blockchain.transaction.from;
-
-		
-		var helpIteratorArr = JSON.parse(this.helpMapIterator.get(requestor));
-		
 		var resultArr = [];
-		
+		var helpIteratorArr = [];
+		var temp = this.helpMapIterator.get(requestor);
+		if(temp != "" && temp != null){
+			helpIteratorArr = JSON.parse(temp);
+		}
+
 		for(var i =0; i<helpIteratorArr.length;i++){
 			resultArr.push(this.helpMap.get(helpIteratorArr[i]));
 		}
@@ -116,6 +132,19 @@ AskHelp.prototype = {
 		var obj = JSON.parse(this.helpMap.get(key));
 		obj.amountReturn += Blockchain.transaction.value/1000000000000000000;//偿还的金额完全自愿，可多可少，全部累加起来
 		this.helpMap.set(key, JSON.stringify(obj));
+		
+		//将金额还给资助者
+		var result = Blockchain.transfer(obj.createdBy, Blockchain.transaction.value);
+		if (!result) {
+		  throw new Error(JSON.stringify(result));
+		}
+		Event.Trigger("ReturnBack", {
+		  Transfer: {
+			from: Blockchain.transaction.to,
+			to: obj.createdBy,
+			value: Blockchain.transaction.value
+		  }
+		});
     }
 };
 

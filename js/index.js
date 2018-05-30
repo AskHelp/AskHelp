@@ -1,4 +1,4 @@
-var dappAddress = "n1zqVCWEam1hKuXiPQCNjBe4Q5n2i7SMwUw";
+var dappAddress = "n1wawtCCRY4KTmomsmA4oTfw2mG5j65TjNU";
 var timerid = "";
 $(function() {
     var NebPay = require("nebpay"); //https://github.com/nebulasio/nebPay
