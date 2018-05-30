@@ -35,7 +35,7 @@ $(function() {
         nebpay.call(to, value, callFunction, callArgs, {
             listener: function(resp) {
                 
-                var helpURL = "file:///E:/nas/dapp/testnet/borrowAndReturn/display.html" + "?uuid=" + uuid;
+                var helpURL = "https://askhelp.github.io/AskHelp/display.html" + "?uuid=" + uuid;
 
                 $("#helpURL").val(helpURL);
 				
